@@ -1,48 +1,58 @@
 import { Injectable } from '@nestjs/common';
-import { UserModel } from 'tools/dtos/models/user.model';
-import { UserCreateDto } from 'tools/dtos/user.dto';
+import { UserModel } from 'tools/models/user.model';
+import { UserCreateDto, UserUpdateDto } from 'tools/dtos/user.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { AuditModel } from 'tools/models/audit.model';
 
-const result: UserModel[] = [];
 
 
 
 @Injectable()
 export class UserService {
-    getAllUsers(): UserModel[] {
-        if (result.length === 0) {   // user yoksa
-            this.creatingMockUser({   // yeni user oluştur
-                birthDay: new Date(),
-                email: "serap@hotmail.com",
-                name: "Serap",
-                surname: "Baysal",
-                password: "123456"
 
-
-            })
-        }
-        return result;
-    }
-    createUser(body: UserCreateDto) {
-        const isExists = result.find(res => (
-            res.email === body.email
-            )
-            
-            )
-        if (isExists) {
-            return isExists;
-        }else {
-            this.creatingMockUser(body);
-            return result.slice(result.length-1, result.length);
-        }
+    constructor(@InjectModel('User') private readonly userMongo: Model<UserModel>
+    ) {
 
     }
-    private creatingMockUser(data: any) {
-        const user: UserModel = new UserModel();
-        user.birthDay = data.birthDay;
-        user.email = data.email;
-        user.name = data.name;
-        user.surname = data.surname;
-        user.password = data.password;
+
+    async create(user: UserCreateDto): Promise<UserModel> {   // MongoDb promise döner, dolayısıyla yazılan fonksiyonlar da promise dönmeli
+        const audit = new AuditModel();
+        audit.active = true;
+        audit.createdBy = 'Admin';   // şimdilik admin, sonra değişecek
+        audit.createdDate = new Date();
+
+
+
+        const createdUser = new this.userMongo({ ...user, ...audit });
+        return await createdUser.save();
+    }
+
+
+    async findAll(): Promise<UserModel[]> {
+
+        return await this.userMongo.find().exec();
+    }
+
+
+    async findOne(id: string): Promise<UserModel> {
+
+        return await this.userMongo.findById(id).exec();
+
+
+    }
+
+
+    async delete(id: string): Promise<UserModel> {
+        return await this.userMongo.findByIdAndRemove(id).exec();
+    }
+
+
+    async update(id: string, user: UserUpdateDto): Promise<UserModel> {
+        let newModel = this.userMongo.findOne({ _id: id }).exec();
+        newModel = { ...newModel, ...user };
+
+        return await this.userMongo.findByIdAndUpdate(id, newModel, { new: true }).exec();   // new:true = yeni kullanıcı döndürülür, new:false = bir önceki kullanıcı döndürülür
 
     }
 }
