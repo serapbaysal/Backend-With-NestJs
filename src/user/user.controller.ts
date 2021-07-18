@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { UserModel } from 'tools/dtos/models/user.model';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { UserModel } from 'tools/models/user.model';
 import { UserCreateDto } from 'tools/dtos/user.dto';
 import { UserService } from './user.service';
 
@@ -16,6 +16,11 @@ export class UserController {
     @Get()
     getAllUsers():UserModel[]{
         return this.userService.getAllUsers();
+    }
+
+    @Get(":id")
+    getUser(@Param() params): UserModel{
+        return this.userService.getUserById(params.id);
     }
 
 
