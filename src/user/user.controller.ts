@@ -8,20 +8,6 @@ export class UserController {
 
     constructor(private userService:UserService){}
 
-    @Post()
-    createUser(@Body() body:UserCreateDto){
-        return this.userService.createUser(body)
-    }
-
-    @Get()
-    getAllUsers():UserModel[]{
-        return this.userService.getAllUsers();
-    }
-
-    @Get(":id")
-    getUser(@Param() params): UserModel{
-        return this.userService.getUserById(params.id);
-    }
 
 
 

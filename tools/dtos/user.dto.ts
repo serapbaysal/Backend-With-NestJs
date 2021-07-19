@@ -1,5 +1,5 @@
-import { GroupModel } from "./models/group.model";
-import { RoleModel } from "./models/role.model";
+import { GroupModel } from "../models/group.model";
+import { RoleModel } from "../models/role.model";
 
 export class UserCreateDto {
     name: string;
