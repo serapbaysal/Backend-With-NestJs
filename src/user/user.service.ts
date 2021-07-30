@@ -54,7 +54,7 @@ export class UserService {
         
         newModel = { ...newModel, ...user };
         
-        return await this.userMongo.findByIdAndUpdate(id, newModel).exec();   // new:true = yeni kullanıcı döndürülür, new:false = bir önceki kullanıcı döndürülür
+        return await this.userMongo.findByIdAndUpdate(id, newModel, {new: true, useFindAndModify:false}).exec();   // new:true = yeni kullanıcı döndürülür, new:false = bir önceki kullanıcı döndürülür
 
     }
 }
