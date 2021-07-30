@@ -13,12 +13,10 @@ export class UserCreateDto {
 export class UserUpdateDto {
     name: string;
     surname: string;
-    image: string;
     password: string;
     email: string;
     birthDay: Date;
-    roles: RoleModel[];
-    groups: GroupModel[];
+    
 }
 
 export class UserLoginDto {
