@@ -16,7 +16,7 @@ export class UserService {
 
     }
 
-    async create(user: UserCreateDto): Promise<UserModel> {   // MongoDb promise döner, dolayısıyla yazılan fonksiyonlar da promise dönmeli
+    async createUser(user: UserCreateDto): Promise<UserModel> {   // MongoDb promise döner, dolayısıyla yazılan fonksiyonlar da promise dönmeli
         const audit = new AuditModel();
         audit.active = true;
         audit.createdBy = 'Admin';   // şimdilik admin, sonra değişecek
@@ -49,10 +49,12 @@ export class UserService {
 
 
     async update(id: string, user: UserUpdateDto): Promise<UserModel> {
+        
         let newModel = this.userMongo.findOne({ _id: id }).exec();
+        
         newModel = { ...newModel, ...user };
-
-        return await this.userMongo.findByIdAndUpdate(id, newModel, { new: true }).exec();   // new:true = yeni kullanıcı döndürülür, new:false = bir önceki kullanıcı döndürülür
+        
+        return await this.userMongo.findByIdAndUpdate(id, newModel).exec();   // new:true = yeni kullanıcı döndürülür, new:false = bir önceki kullanıcı döndürülür
 
     }
 }
