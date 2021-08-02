@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UserModel } from 'tools/models/user.model';
 import { UserCreateDto} from 'tools/dtos/user.dto';
-import { UserUpdateDto } from 'tools/dtos/user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -11,6 +10,7 @@ export class UserController {
 
     @Post()
     async createUser(@Body() body: UserCreateDto):Promise<UserModel>{
+        body.password = await this.userService.convertToHash(body.password);
         return await this.userService.createUser(body);
 
     }
