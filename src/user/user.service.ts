@@ -4,8 +4,11 @@ import { UserCreateDto, UserUpdateDto } from 'tools/dtos/user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AuditModel } from 'tools/models/audit.model';
+import  environment from 'tools/environment/environment'
 
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const hashText = environment.hashText;
 
 
 @Injectable()
@@ -56,5 +59,14 @@ export class UserService {
         
         return await this.userMongo.findByIdAndUpdate(id, newModel, {new: true, useFindAndModify:false}).exec();   // new:true = yeni kullanıcı döndürülür, new:false = bir önceki kullanıcı döndürülür
 
+    }
+    async convertToHash(value:string) {
+        let hashPwd;
+        await bcrypt.hash(`${hashText}${value}`,saltRounds).then(hash => {hashPwd = hash})
+        return await hashPwd;
+    }
+    async compareHashes(password, hashed) {
+        const match = await bcrypt.compareSync(`${hashText}${password}`, hashed)
+        return await match;
     }
 }
