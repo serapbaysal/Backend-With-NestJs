@@ -6,7 +6,7 @@ export class UserCreateDto {
     image: string;
     password: string;
     email: string;
-    birthday: Date;
+   
 }
 
 export class UserUpdateDto {
@@ -14,7 +14,7 @@ export class UserUpdateDto {
     surname: string;
     password: string;
     email: string;
-    birthDay: Date;
+   
     
 }
 
