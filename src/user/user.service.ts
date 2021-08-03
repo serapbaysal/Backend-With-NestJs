@@ -3,7 +3,7 @@ import { UserModel } from 'tools/models/user.model';
 import { UserCreateDto, UserUpdateDto } from 'tools/dtos/user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { AuditModel } from 'tools/models/audit.model';
+
 import  environment from 'tools/environment/environment'
 
 const bcrypt = require('bcrypt');
@@ -20,14 +20,10 @@ export class UserService {
     }
 
     async createUser(user: UserCreateDto): Promise<UserModel> {   // MongoDb promise döner, dolayısıyla yazılan fonksiyonlar da promise dönmeli
-        const audit = new AuditModel();
-        audit.active = true;
-        audit.createdBy = 'Admin';   // şimdilik admin, sonra değişecek
-        audit.createdDate = new Date();
+        
 
 
-
-        const createdUser = new this.userMongo({ ...user, ...audit });
+        const createdUser = new this.userMongo();
         return await createdUser.save();
     }
 

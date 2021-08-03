@@ -1,6 +1,3 @@
-import { AuditModel } from "./audit.model";
-import { GroupModel } from "./group.model";
-import { RoleModel } from "./role.model";
 import * as mongoose from "mongoose";
 mongoose.set('useFindAndModify', false);
 mongoose.set('useNewUrlParser', true);
@@ -17,10 +14,7 @@ export class UserModel {
     email: string;
     password: string;   // girilen password
     passwordHash: string; // hash'lenen password
-    birthDay: Date;
-    audit: AuditModel;
-    roles: RoleModel[];
-    groups: GroupModel[];
+    
 
 
 }
@@ -32,10 +26,7 @@ export const UserSchema = new mongoose.Schema(
         email: String,
         password: String,   // girilen password
         passwordHash: String, // hash'lenen password
-        birthDay: Date,
-        audit: { type: Object },
-        roles: Array,
-        groups: Array,
+        
     }
 );
 

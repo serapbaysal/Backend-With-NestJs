@@ -5,10 +5,11 @@ import { UserModule } from './user/user.module';
 import environment from 'tools/environment/environment';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoginModule } from './login/login.module';
+import { SignupModule } from './signup/signup.module';
 
 
 @Module({
-  imports: [UserModule,LoginModule, MongooseModule.forRoot(environment.mongoUrl)],
+  imports: [UserModule,LoginModule,SignupModule, MongooseModule.forRoot(environment.mongoUrl)],
 
   controllers: [AppController],
   providers: [AppService],

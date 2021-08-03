@@ -41,7 +41,7 @@ export class LoginService {
                 return await { success: false, response: 'user does not exists' }
             }
         } catch (error) {
-            return await {success: false}
+            return await {success: false, error}
         };
         
     }
