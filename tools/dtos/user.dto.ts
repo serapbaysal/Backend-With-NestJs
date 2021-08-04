@@ -6,6 +6,10 @@ export class UserCreateDto {
     image: string;
     password: string;
     email: string;
+    refreshToken : {
+        type: string
+        default: ""
+    };
    
 }
 
@@ -22,5 +26,11 @@ export class UserLoginDto {
    
     email: string;
     password: string;
+    refreshToken: string;
 
+}
+
+export class ForgotPasswordDto {
+    email:string;
+    
 }

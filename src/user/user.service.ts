@@ -20,9 +20,6 @@ export class UserService {
     }
 
     async createUser(user: UserCreateDto): Promise<UserModel> {   // MongoDb promise döner, dolayısıyla yazılan fonksiyonlar da promise dönmeli
-        
-
-
         const createdUser = new this.userMongo();
         return await createdUser.save();
     }
@@ -37,8 +34,6 @@ export class UserService {
     async findOne(id: string): Promise<UserModel> {
 
         return await this.userMongo.findById(id).exec();
-
-
     }
 
 

@@ -13,8 +13,8 @@ export class UserModel {
     image: string;
     email: string;
     password: string;   // girilen password
-    passwordHash: string; // hash'lenen password
-    
+    passwordHash: string; // hash'lenen password,
+    refreshToken:string;
 
 
 }
@@ -26,6 +26,7 @@ export const UserSchema = new mongoose.Schema(
         email: String,
         password: String,   // girilen password
         passwordHash: String, // hash'lenen password
+        refreshToken: String
         
     }
 );
