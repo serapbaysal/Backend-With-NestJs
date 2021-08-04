@@ -18,7 +18,13 @@ export class AuthService {
     ) {
 
     }
-    async logout(){
+    async logout(id:string):Promise<UserModel>{
+        try {
+            return await this.userMongo.findByIdAndUpdate(id, {refreshToken:""}, {new:true, useFindAndModify:false});
+
+        } catch (error) {
+            return error;
+        }
 
     }
 

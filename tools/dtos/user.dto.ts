@@ -6,10 +6,7 @@ export class UserCreateDto {
     image: string;
     password: string;
     email: string;
-    refreshToken : {
-        type: string
-        default: ""
-    };
+    refreshToken :string
    
 }
 
