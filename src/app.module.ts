@@ -7,9 +7,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { LoginModule } from './login/login.module';
 import { SignupModule } from './signup/signup.module';
 
+import { AuthModule } from './auth/auth.module';
+
 
 @Module({
-  imports: [UserModule,LoginModule,SignupModule, MongooseModule.forRoot(environment.mongoUrl)],
+  imports: [UserModule,LoginModule,SignupModule, AuthModule, MongooseModule.forRoot(environment.mongoUrl)],
 
   controllers: [AppController],
   providers: [AppService],
